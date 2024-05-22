@@ -1,0 +1,29 @@
+pipeline {
+    agent any
+     environment {
+        DOCKER_USERNAME = "ashutosh"
+    }
+    parameters {
+        string(name: 'DOCKER_IMAGE', defaultValue: 'ashutosh/buildimage:latest', description: 'Docker image to deploy')
+    }
+
+    stages {
+        stage('Deploy to Staging') {
+            steps {
+                script {
+                    docker.image(params.DOCKER_IMAGE).run('-d -p 8080:3000')
+                }
+            }
+        }
+    }
+    post {
+        failure {
+            script {
+                currentBuild.result = 'FAILURE'
+                echo "Deployment failed. Rolling back."
+                sh "docker stop $(docker ps -q --filter ancestor=${params.DOCKER_IMAGE}) || true"
+            }
+        }
+    }
+}
+
