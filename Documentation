@@ -1,0 +1,17 @@
+For this project :
+Required Dependencies:
+1. NodeJs
+2. Docker
+3. Java
+4. Jenkins
+
+A] For installation of these tools, scripts are used. The scripts are in the Scripts directory.
+
+B] For containerization of the application, docker is used.
+  i) Application and its dependencies are packaged into docker image, with the help of Dockerfile.
+     Dockerfile is in the repository
+  ii) The image is then run in container of docker 
+
+C] To make this process fully automated, Jenkins is used as CI/CD tools
+   i) One pipeline is created for CI and one for CD
+   ii) The Jenkins pipeline is present in the repository.   
